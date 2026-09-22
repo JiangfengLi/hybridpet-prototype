@@ -1,0 +1,10 @@
+node_modules/
+test-results/
+.sites-runtime/
+.env
+.env.*
+*.tar.gz
+*.tgz
+基因表_待编辑.xlsx
+鲁帕兽幻杂交版_设计文档.md
+宠物繁衍游戏_网页MVP设计文档.md

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b101b"><meta name="description" content="把两只宠物的基因样本放进同一个繁衍格，发现新的生命，延续你的宠物家族。">
+  <title>EVO PET · 宠物繁衍实验室</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%230e1824'/%3E%3Cpath d='M12 9C30 14 10 27 28 31M28 9C10 14 30 27 12 31M13 13H27M15 20H25M13 27H27' fill='none' stroke='%238ce4c4' stroke-width='2.6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css"><script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">跳到繁衍格</a>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="EVO PET 首页"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 5C28 12 4 20 23 27M23 5C4 12 28 20 9 27M10 9H22M12 16H20M10 23H22"/></svg></span><span>EVO<span class="brand-light">PET</span><small>鲁帕兽幻</small></span></a>
+    <nav class="nav" aria-label="主导航"><button class="nav-link active" id="nav-lab">繁衍工作台</button><button class="nav-link" id="nav-collection">我的收藏 <span id="nav-count">06</span></button></nav>
+    <div class="header-actions"><span id="save-status" class="save-status">正在唤醒实验室</span><button class="icon-button" id="sound-toggle" aria-label="开启声音" title="开启声音"></button><button class="icon-button" id="settings-open" aria-label="设置" title="设置"></button></div>
+  </header>
+  <main>
+    <section class="page-heading"><div><div class="eyebrow">THE BREEDING LAB</div><h1>每一次相遇，都有新可能<span>。</span></h1></div><button class="text-button" id="help-open"><span class="help-mark">?</span> 繁衍指南</button></section>
+    <div id="read-only-banner" class="banner" hidden>另一张页面正在使用这个存档。本页可查看宠物；关闭另一页后可在此继续。</div>
+    <div id="error-banner" class="banner error" hidden role="alert"></div>
+    <div class="workspace">
+      <section class="panel collection-panel" id="collection" aria-labelledby="collection-title">
+        <div class="panel-heading"><div><span class="section-number">01</span><h2 id="collection-title">我的宠物</h2></div><span class="counter" id="collection-count">6</span></div>
+        <div class="collection-toolbar"><div class="filter-tabs" role="group" aria-label="收藏筛选"><button class="filter active" data-filter="all">全部</button><button class="filter" data-filter="favorite">已收藏</button></div><select id="sort-order" aria-label="宠物排序"><option value="new">最新</option><option value="generation">代数</option><option value="name">名字</option></select></div>
+        <div class="pet-grid" id="pet-grid"><p class="loading-text">正在准备你的宠物…</p></div>
+        <div class="pagination" id="pagination" hidden><button class="icon-button" id="prev-page" aria-label="上一页">‹</button><span id="page-number"></span><button class="icon-button" id="next-page" aria-label="下一页">›</button></div>
+        <p class="panel-note"><span aria-hidden="true">↗</span> 拖动基因样本，或点击卡片上的「＋」</p>
+      </section>
+
+      <section class="panel lab-panel" id="workbench" aria-labelledby="lab-title" tabindex="-1">
+        <div class="panel-heading"><div><span class="section-number">02</span><h2 id="lab-title">繁衍格</h2></div><span class="lab-status" id="lab-status">等待样本</span></div>
+        <div class="lab-scene" id="lab-scene">
+          <div class="scene-cross cross-tl" aria-hidden="true">＋</div><div class="scene-cross cross-tr" aria-hidden="true">＋</div><div class="scene-cross cross-bl" aria-hidden="true">＋</div><div class="scene-cross cross-br" aria-hidden="true">＋</div>
+          <div class="lab-square" id="drop-zone" aria-label="繁衍格，将两只不同宠物的样本放入这里" tabindex="0">
+            <div class="square-corner tl"></div><div class="square-corner tr"></div><div class="square-corner bl"></div><div class="square-corner br"></div>
+            <div id="chamber-content" class="chamber-content"></div>
+          </div>
+          <div class="lab-caption" aria-live="polite"><h3 id="stage-title">等待一场奇妙的相遇</h3><p id="stage-subtitle">将两份基因样本放进同一个格子</p></div>
+          <div class="stage-actions" id="stage-actions"></div>
+        </div>
+        <div class="source-tray" id="source-tray"></div>
+        <div class="lab-footer"><span class="tiny-orbit" aria-hidden="true"></span><span>原宠物会保留 · 每次诞生一只新宠物</span></div>
+      </section>
+
+      <aside class="panel observation-panel" aria-labelledby="observation-title">
+        <div class="panel-heading"><div><span class="section-number">03</span><h2 id="observation-title">观察手记</h2></div><span class="observation-mark" aria-hidden="true">✧</span></div>
+        <div id="observation"></div>
+      </aside>
+    </div>
+    <section class="journey" aria-label="探索进度"><div class="journey-label"><span class="journey-icon" aria-hidden="true">✦</span><div><strong>你的繁衍之旅</strong><small>从第一次相遇，到一个新家族</small></div></div><ol id="milestones"><li>首次繁衍</li><li>让后代成为亲本</li><li>延续至第三代</li></ol><span class="journey-count" id="birth-count">0 次新生</span></section>
+    <footer class="page-footer"><span>EVO PET <span class="footer-separator">/</span> 每个小生命，都是新的故事</span><span>私人实验室 <span class="footer-separator">·</span> 本地保存</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="help-dialog" class="modal"><div class="modal-top"><span class="eyebrow">A LITTLE GUIDE</span><button class="icon-button close-dialog" aria-label="关闭指南">×</button></div><h2>两份样本，一个新生命</h2><div class="guide-steps"><div><b>01</b><h3>挑选两只宠物</h3><p>拖动样本或点击「＋」，放入同一个繁衍格。第二份样本放入后会自动开始。</p></div><div><b>02</b><h3>看它们拆解、重组</h3><p>新宠物逐项继承双亲的特征，也可能发生随机变化。原宠物一直留在收藏中。</p></div><div><b>03</b><h3>让故事继续</h3><p>后代会自动保存。选择「以它继续繁衍」，就能让这个家族继续生长。</p></div></div><p class="modal-note">有些部位没有出现，却仍可传给下一代。同样的双亲，也可能迎来相似的孩子。</p><button class="primary-button close-dialog">去发现新生命 <span>↗</span></button></dialog>
+  <dialog id="settings-dialog" class="modal settings-modal"><div class="modal-top"><span class="eyebrow">YOUR LAB</span><button class="icon-button close-dialog" aria-label="关闭设置">×</button></div><h2>实验室设置</h2><label class="setting-row"><span><strong>声音</strong><small>投放、重组与出生音效</small></span><input id="sound-setting" type="checkbox" role="switch"></label><label class="setting-row"><span><strong>减少动画</strong><small>使用简短的淡入效果</small></span><input id="motion-setting" type="checkbox" role="switch"></label><p class="modal-note">宠物保存在当前浏览器中。刷新不会丢失，清除浏览器数据会移除本地存档。</p></dialog>
+  <dialog id="rename-dialog" class="modal"><form id="rename-form"><div class="modal-top"><span class="eyebrow">A NAME OF ITS OWN</span><button class="icon-button close-dialog" type="button" aria-label="关闭命名">×</button></div><h2>给它一个名字</h2><label for="pet-name">宠物名字</label><input id="pet-name" class="name-input" maxlength="20" required autocomplete="off"><p class="modal-note">最多 20 个字符。名字可以随时修改。</p><button class="primary-button" type="submit">保存名字 <span>✓</span></button></form></dialog>
+  <noscript><div class="banner error">请开启浏览器 JavaScript 后进入宠物实验室。</div></noscript>
+</body>
+</html>
